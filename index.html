@@ -337,7 +337,7 @@
 
     /* SKILLS */
     #skills { background: rgba(0,0,0,0.2); }
-    .skills-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; }
+    .skills-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
     .skill-group { background: var(--card); border: 1px solid var(--border); border-radius: var(--r-lg); padding: 28px; transition: border-color 0.3s; }
     .skill-group:hover { border-color: var(--border-hover); }
     .skill-group-title { font-family: var(--font-b); font-size: 0.78rem; font-weight: 600; color: var(--text-2); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 20px; display: flex; align-items: center; gap: 8px; }
@@ -371,6 +371,15 @@
     .exp-bullets li { font-size: 0.88rem; font-weight: 400; color: var(--text-2); padding-left: 16px; position: relative; line-height: 1.65; }
     .exp-bullets li::before { content: '▸'; position: absolute; left: 0; color: var(--gold); }
     .exp-bullets li strong { color: var(--text); font-weight: 500; }
+    /* NOTE: .exp-item::before { top: 28px } is intentionally fixed across ALL timeline entries — do NOT override for .exp-group */
+    .exp-group-header { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-start; gap: 12px; margin-bottom: 20px; padding-bottom: 16px; border-bottom: 1px solid var(--border); }
+    .badge-promo { background: rgba(245,166,35,0.12); color: var(--gold); border: 1px solid rgba(245,166,35,0.3); }
+    .exp-role { padding-bottom: 20px; border-bottom: 1px solid var(--border); }
+    .exp-role:last-child { border-bottom: none; padding-bottom: 0; }
+    .exp-role + .exp-role { margin-top: 24px; }
+    .exp-promo-connector { display: flex; align-items: center; gap: 10px; margin: 16px 0; }
+    .exp-promo-line { width: 2px; height: 24px; background: var(--gold); opacity: 0.3; border-radius: 1px; flex-shrink: 0; }
+    .exp-promo-text { font-style: italic; font-size: 0.75rem; color: var(--text-3); }
 
     /* FEATURED PROJECTS */
     .featured-projects { display: flex; flex-direction: column; gap: 28px; }
@@ -558,6 +567,8 @@
       #cursor, #cursor-ring { display: none; }
       .modal-box { padding: 28px; }
       .nav-cta { display: none; }
+      .exp-group .exp-bullets { gap: 6px; }
+      .exp-role + .exp-role { margin-top: 12px; }
     }
     @media (max-width: 600px) {
       .hero-stats { gap: 24px; }
@@ -742,13 +753,6 @@
         <div class="skill-bar-item"><div class="skill-bar-header"><span class="skill-name">Power BI / Tableau / Data Studio</span><span class="skill-pct">78%</span></div><div class="skill-track"><div class="skill-fill" style="background:var(--gold)" data-w="78%"></div></div></div>
       </div>
       <div class="skill-group">
-        <div class="skill-group-title"><span class="sg-dot" style="background:var(--teal)"></span>AI & ML Engineering</div>
-        <div class="skill-bar-item"><div class="skill-bar-header"><span class="skill-name">LangChain &amp; RAG Pipelines</span><span class="skill-pct">85%</span></div><div class="skill-track"><div class="skill-fill" style="background:var(--teal)" data-w="85%"></div></div></div>
-        <div class="skill-bar-item"><div class="skill-bar-header"><span class="skill-name">Vector DBs (Pinecone / FAISS)</span><span class="skill-pct">80%</span></div><div class="skill-track"><div class="skill-fill" style="background:var(--teal)" data-w="80%"></div></div></div>
-        <div class="skill-bar-item"><div class="skill-bar-header"><span class="skill-name">LLM Integration (Claude / OpenAI)</span><span class="skill-pct">82%</span></div><div class="skill-track"><div class="skill-fill" style="background:var(--teal)" data-w="82%"></div></div></div>
-        <div class="skill-bar-item"><div class="skill-bar-header"><span class="skill-name">FastAPI (Python Backend)</span><span class="skill-pct">78%</span></div><div class="skill-track"><div class="skill-fill" style="background:var(--teal)" data-w="78%"></div></div></div>
-      </div>
-      <div class="skill-group">
         <div class="skill-group-title"><span class="sg-dot" style="background:var(--blue)"></span>Frontend Development</div>
         <div class="skill-bar-item"><div class="skill-bar-header"><span class="skill-name">React.js &amp; JavaScript</span><span class="skill-pct">85%</span></div><div class="skill-track"><div class="skill-fill" style="background:var(--blue)" data-w="85%"></div></div></div>
         <div class="skill-bar-item"><div class="skill-bar-header"><span class="skill-name">TailwindCSS / HTML / CSS</span><span class="skill-pct">88%</span></div><div class="skill-track"><div class="skill-fill" style="background:var(--blue)" data-w="88%"></div></div></div>
@@ -783,21 +787,45 @@
     <div class="section-label">03 · Where I've Worked</div>
     <h2 class="section-title">Experience</h2>
     <div class="exp-timeline reveal">
-      <div class="exp-item current">
-        <div class="exp-header">
-          <div>
-            <div class="exp-title">Customer Happiness Cell — Operations Analyst</div>
-            <div class="exp-company">Licious · Bengaluru, India (Remote)</div>
-            <div class="exp-period">Sep 2025 – Present</div>
-          </div>
-          <span class="exp-badge badge-current">● Current</span>
+      <div class="exp-item exp-group current">
+        <div class="exp-group-header">
+          <div class="exp-company">Licious · Bengaluru, India (Remote)</div>
+          <span class="exp-badge badge-promo">Promoted ↑</span>
         </div>
-        <ul class="exp-bullets">
-          <li>Monitored daily customer interaction data, identifying <strong>recurring escalation patterns</strong> and process gaps for team leads.</li>
-          <li>Tracked operational metrics across delivery exceptions (CNR, RNR, delays), compiling <strong>weekly trend summaries</strong> for process review.</li>
-          <li>Maintained structured logs of issue categories, resolution times, and customer feedback — feeding into <strong>operational reporting</strong>.</li>
-          <li>Applied analytical thinking to streamline query resolution workflows, improving response consistency across the team.</li>
-        </ul>
+        <div class="exp-role">
+          <div class="exp-header">
+            <div>
+              <div class="exp-title">Workforce Manager (WFM)</div>
+              <div class="exp-period">Jul 2026 – Present</div>
+            </div>
+            <span class="exp-badge badge-current">● Current</span>
+          </div>
+          <ul class="exp-bullets">
+            <li>Own end-to-end workforce management for a support team of <strong>50–150 agents</strong>, covering shift scheduling, real-time monitoring, and attendance/shrinkage tracking.</li>
+            <li>Build <strong>demand forecasting models</strong> in Excel and Power BI to align staffing levels with predicted contact volume, reducing under- and over-staffing risk.</li>
+            <li>Track <strong>SLA adherence in real time</strong>, flagging coverage gaps and adjusting schedules proactively to protect service levels.</li>
+            <li>Partner with team leads and ops managers to translate raw scheduling data into <strong>weekly staffing and capacity reports</strong>.</li>
+          </ul>
+        </div>
+        <div class="exp-promo-connector">
+          <div class="exp-promo-line"></div>
+          <span class="exp-promo-text">↑ Promoted internally to Workforce Management after 9 months as an Operations Analyst</span>
+        </div>
+        <div class="exp-role">
+          <div class="exp-header">
+            <div>
+              <div class="exp-title">Customer Happiness Cell — Operations Analyst</div>
+              <div class="exp-period">Sep 2025 – Jun 2026</div>
+            </div>
+            <span class="exp-badge badge-done">Completed</span>
+          </div>
+          <ul class="exp-bullets">
+            <li>Monitored daily customer interaction data, identifying <strong>recurring escalation patterns</strong> and process gaps for team leads.</li>
+            <li>Tracked operational metrics across delivery exceptions (CNR, RNR, delays), compiling <strong>weekly trend summaries</strong> for process review.</li>
+            <li>Maintained structured logs of issue categories, resolution times, and customer feedback — feeding into <strong>operational reporting</strong>.</li>
+            <li>Applied analytical thinking to streamline query resolution workflows, improving response consistency across the team.</li>
+          </ul>
+        </div>
       </div>
       <div class="exp-item">
         <div class="exp-header">
@@ -919,13 +947,14 @@
         <div class="dev-card-top">
           <svg class="dev-folder" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 7a2 2 0 012-2h4l2 2h8a2 2 0 012 2v8a2 2 0 01-2 2H5a2 2 0 01-2-2V7z"/></svg>
           <div class="dev-links">
-            <!-- Fixed: was href="#" -->
-            <span style="font-family:var(--font-b);font-size:0.65rem;color:var(--text-3);">Coming Soon</span>
+            <a href="https://wfm-dashboard-lime.vercel.app" target="_blank" rel="noopener" class="dev-link" aria-label="Live">
+              <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
+            </a>
           </div>
         </div>
-        <div class="dev-title">VibeFlow</div>
-        <div class="dev-desc">Full-stack music streaming web app with user auth, playlist management, and real-time audio playback. RESTful APIs with Node.js/Express; MongoDB schemas for users, tracks &amp; playlists.</div>
-        <div class="dev-tags"><span class="dev-tag">React.js</span> · <span class="dev-tag">Node.js</span> · <span class="dev-tag">MongoDB</span> · <span class="dev-tag">Express.js</span></div>
+        <div class="dev-title">WFM Breaksheet Dashboard</div>
+        <div class="dev-desc">View-only workforce management dashboard built for a live 5-person ops team — uploads a daily call-center breaksheet (Excel) and surfaces AHT, abandonment %, shrinkage %, and break-time trends over time, broken down by LOB and agent with drill-down tables. Built on Next.js + Supabase (Postgres + Storage), designed to run entirely on free-tier infrastructure.</div>
+        <div class="dev-tags"><span class="dev-tag">Next.js</span> · <span class="dev-tag">Supabase</span> · <span class="dev-tag">TypeScript</span> · <span class="dev-tag">SheetJS</span> · <span class="dev-tag">Tailwind CSS</span></div>
       </div>
       <div class="dev-card">
         <div class="dev-card-top">
